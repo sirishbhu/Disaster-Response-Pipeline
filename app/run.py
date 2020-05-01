@@ -8,6 +8,8 @@ from nltk.tokenize import word_tokenize
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
+from plotly.graph_objs import Pie
+from plotly.graph_objs import Histogram
 #from sklearn.externals import joblib
 from sqlalchemy import create_engine
 
@@ -43,6 +45,13 @@ def index():
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    category_sum=df.iloc[:,4:].sum(axis=0,skipna=True).reset_index().rename(columns={'index': 'col_name',0:'sum'})
+    category_sum.sort_values(by='sum',inplace=True,ascending=False)
+    category_sum=category_sum.reset_index(drop=True)
+    categories=category_sum['col_name']
+    cat_sum=category_sum['sum']
+    categories_count=df.iloc[:,4:].sum(axis=1,skipna=True)
+    
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
     graphs = [
@@ -63,7 +72,60 @@ def index():
                     'title': "Genre"
                 }
             }
-        }
+        },
+        
+        
+        {
+            'data': [
+                Pie(
+                    labels=genre_names,
+                    values=genre_counts
+                )
+            ],
+
+            'layout': {
+                'title': 'Percentage Share of Message Genres',
+            }
+        },
+        
+        
+        {
+            'data': [
+                Histogram(
+                    x=categories_count                    
+                )
+            ],
+
+            'layout': {
+                'title': 'No. of categories per message',
+                'yaxis': {
+                    'title': "Messages count"
+                },
+                'xaxis': {
+                    'title': "Categories count"  
+                }        
+            }
+        },
+       
+        
+        {
+            'data': [
+                Bar(
+                    x=categories,
+                    y=cat_sum
+                )
+            ],
+
+            'layout': {
+                'title': 'Distribution of Message Categories',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "Category"
+            }
+        }}
+        
     ]
     
     # encode plotly graphs in JSON

@@ -30,8 +30,8 @@ def load_data(database_filepath):
     '''
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('data',engine)
-    X=df.iloc[:,1]
-    Y=df.iloc[:,4:]
+    X=df.iloc[:10,1]
+    Y=df.iloc[:10,4:]
     categories=Y.columns.tolist()
     return X,Y,categories
     
