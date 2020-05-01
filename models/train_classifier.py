@@ -30,8 +30,8 @@ def load_data(database_filepath):
     '''
     engine = create_engine('sqlite:///'+database_filepath)
     df = pd.read_sql_table('data',engine)
-    X=df.iloc[:10,1]
-    Y=df.iloc[:10,4:]
+    X=df.iloc[:,1]
+    Y=df.iloc[:,4:]
     categories=Y.columns.tolist()
     return X,Y,categories
     
@@ -67,10 +67,10 @@ def build_model():
     ('clf',MultiOutputClassifier(RandomForestClassifier()))
     ])
     parameters = {
-        'clf__estimator__n_estimators':[10, 25],
-        'clf__estimator__min_samples_split':[2,4],
+        'clf__estimator__n_estimators':[10,30],
+        'clf__estimator__min_samples_split':[2,5],
         'tfidf__use_idf': ['True','False'],
-        'vect__max_df':[0.8,1.0]
+        'vect__max_df':[0.5,1.0]
     }
     cv = GridSearchCV(pipeline,param_grid=parameters,n_jobs=1,verbose=5)
     return cv

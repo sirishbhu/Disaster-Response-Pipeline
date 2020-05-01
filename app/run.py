@@ -41,19 +41,26 @@ model = joblib.load("../models/classifier.pkl")
 def index():
     
     # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    #find column-wise sum of each category
     category_sum=df.iloc[:,4:].sum(axis=0,skipna=True).reset_index().rename(columns={'index': 'col_name',0:'sum'})
+    
+    #sort the values 
     category_sum.sort_values(by='sum',inplace=True,ascending=False)
+    
     category_sum=category_sum.reset_index(drop=True)
+    
+    #Assign X and Y variables from the data
     categories=category_sum['col_name']
     cat_sum=category_sum['sum']
+    
+    #Find row-wise sum of no. of categories a message is classified into
     categories_count=df.iloc[:,4:].sum(axis=1,skipna=True)
     
     # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+
     graphs = [
         {
             'data': [
