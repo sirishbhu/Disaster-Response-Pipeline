@@ -2,7 +2,7 @@
 
 ### Requirements :
 The code has been written on python 3.6.3.
-The following python libraries are needed to ru the code.
+The following python libraries are needed to run the code.
 * Numpy
 * Pandas
 * sqlalchemy
@@ -14,15 +14,15 @@ The following python libraries are needed to ru the code.
 
 ### File Descriptions :
 
-##### app 
+#### app 
 It contains the python script run.py containing the flask code used to run the app.
 
-##### data
-It contains two dataset files disaster_categories.csv and disaster_messages.csv
-One database file DisasterResponse.db containing the final dataframe in a table named data.
+#### data
+It contains two dataset files disaster_categories.csv and disaster_messages.csv.  
+One database file DisasterResponse.db containing the final dataframe in a table named data.  
 A python script for loading,cleaning and saving data into database process_data.py
 
-##### models 
+#### models 
 It contains the python script train_classifier.py used to train and save the ML model in the same folder.
 
 ### Instructions:
@@ -31,14 +31,14 @@ It contains the python script train_classifier.py used to train and save the ML 
     - To run ETL pipeline that cleans data and stores in database
         `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/(Your_Database_Name).db`
     - To run ML pipeline that trains classifier and saves
-        `python models/train_classifier.py data/(Your_Database_Name).db models/(Your_Model_Name).pkl`
-        
-2.Update the database name and the trained model name in appropriate locations of the run.py file.
+        `python models/train_classifier.py data/(Your_Database_Name).db models/(Your_Model_Name).pkl`   
+      
+2. Update the database name and the trained model name in appropriate locations of the run.py file.
 
 3. Run the following command in the app's directory to run your web app.
     `python run.py`
 
-4. Go to http://127.0.0.1:3001/
+4. Go to http://127.0.0.1:3001/ 
 
 ### Results:
 
